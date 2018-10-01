@@ -5,14 +5,14 @@ class Flag(models.Model):
 	flag=models.CharField(max_length=200)
 
 	def __str__(self):
-		return self.name
+		return self.flag
 
 class Type(models.Model):
 	# Defines types of ship.
 	type=models.CharField(max_length=200)
 
 	def __str__(self):
-		return self.name
+		return self.type
 
 class City(models.Model):
 	# Defines cities.
@@ -27,7 +27,7 @@ class Country(models.Model):
 	country=models.CharField(max_length=200)
 
 	def __str__(self):
-		return self.name
+		return self.country
 
 class Builder(models.Model):
 	# Defines builders.
@@ -43,28 +43,28 @@ class Register(models.Model):
 	register=models.CharField(max_length=200)
 
 	def __str__(self):
-		return self.name
+		return self.register
 
 class Use(models.Model):
 	# Defines uses.
 	use=models.CharField(max_length=200)
 
 	def __str__(self):
-		return self.name
+		return self.use
 
 class Status(models.Model):
 	# Defines statuses.
 	status=models.CharField(max_length=200)
 
 	def __str__(self):
-		return self.name
+		return self.status
 
 class Owner(models.Model):
 	# Defines owners.
 	owner=models.CharField("Name of Owner", max_length=200)
 
 	def __str__(self):
-		return self.name
+		return self.owner
 
 class Ship(models.Model):
 	# Defines each ship in the database.
