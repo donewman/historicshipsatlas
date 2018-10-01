@@ -1,0 +1,32 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>{{ ship.name }}</h1>
+
+<table>
+  <tr>
+    <th scope="row">Type</th>
+    <td>{{ ship.type }}</td>
+  </tr>
+  <tr>
+    <th scope="row">Year Built</th>
+    <td>{{ ship.year }}</td>
+  </tr>
+  <tr>
+    <th scope="row">Location - City</th>
+    <td>{{ ship.city }}</td>
+  </tr>
+  <tr>
+    <th scope="row">Location - Country</th>
+    <td>{{ ship.country }}</td>
+  </tr>
+  <tr>
+    <th scope="row">Current Use(s)</th>
+    <td>{{ ship.use }}</td>
+  </tr>
+  <tr>
+    <th scope="row">Current Status</th>
+    <td>{{ ship.status }}</td>
+  </tr>
+</table>
+{% endblock %}
