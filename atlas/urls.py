@@ -1,5 +1,5 @@
 from django.urls import path
-from catalog import views
+from atlas import views
 
 urlpatterns = [
 
