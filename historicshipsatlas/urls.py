@@ -19,3 +19,22 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+# Include paths from atlas
+from django.conf.urls import include
+
+urlpatterns += [
+    path('atlas/', include('atlas.urls')),
+]
+
+# Add URL maps to redirect the base URL to atlas
+from django.views.generic import RedirectView
+urlpatterns += [
+    path('', RedirectView.as_view(url='/atlas/')),
+]
+
+# Serve static files during development (only)
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
