@@ -20,7 +20,7 @@ class City(models.Model):
 	city_region=models.CharField(max_length=200, blank=True)
 
 	def __str__(self):
-		return "%s %s" % (self.city_name, self.city_region)
+		return "%s, %s" % (self.city_name, self.city_region)
 
 class Country(models.Model):
 	# Defines countries.
@@ -36,7 +36,7 @@ class Builder(models.Model):
 	builder_country=models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
 
 	def __str__(self):
-		return "%s %s %s" % (self.builder_name, self.builder_city, self.builder_country)
+		return "%s, %s, %s" % (self.builder_name, self.builder_city, self.builder_country)
 
 class Register(models.Model):
 	# Defines historic registers.
