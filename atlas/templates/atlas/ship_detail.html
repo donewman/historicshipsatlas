@@ -4,13 +4,13 @@
 <h2>{{ ship.name }}</h2>
 
 <table>
-  {% if imo %}
+  {% if ship.imo %}
   <tr>
     <th scope="row">IMO Number</th>
     <td>{{ ship.imo }}</td>
   </tr>
   {% endif %}
-  {% if type %}
+  {% if ship.type %}
   <tr>
     <th scope="row">Type</th>
     <td>{{ ship.type }}</td>
@@ -20,25 +20,25 @@
     <th scope="row">Year Built</th>
     <td>{{ ship.year }}</td>
   </tr>
-  {% if builder %}
+  {% if ship.builder %}
   <tr>
     <th scope="row">Builder</th>
     <td>{{ ship.builder }}</td>
   </tr>
   {% endif %}
-  {% if tonnage %}
+  {% if ship.tonnage %}
   <tr>
     <th scope="row">Gross Tonnage</th>
     <td>{{ ship.tonnage }}</td>
   </tr>
   {% endif %}
-  {% if length %}
+  {% if ship.length %}
   <tr>
     <th scope="row">Length (m)</th>
     <td>{{ ship.length }}</td>
   </tr>
   {% endif %}
-  {% if beam %}
+  {% if ship.beam %}
   <tr>
     <th scope="row">Beam (m)</th>
     <td></td>
@@ -52,7 +52,7 @@
     <th scope="row">Location - Country</th>
     <td>{{ ship.country }}</td>
   </tr>
-  {% if registers %}
+  {% if ship.registers %}
   <tr>
     <th scope="row">Historic Register(s)</th>
     <td>{{ ship.registers }}</td>
@@ -62,31 +62,31 @@
     <th scope="row">Current Status</th>
     <td>{{ ship.status }}</td>
   </tr>
-  {% if uses %}
+  {% if ship.uses %}
   <tr>
     <th scope="row">Current Use(s)</th>
     <td>{{ ship.uses }}</td>
   </tr>
-  {% endif %}  
-  {% if flag %}
+  {% endif %}
+  {% if ship.flag %}
   <tr>
     <th scope="row">Flag</th>
     <td>{{ ship.flag }}</td>
   </tr>
   {% endif %}
-  {% if owner %}
+  {% if ship.owner %}
   <tr>
     <th scope="row">Owner</th>
     <td>{{ ship.owner }}</td>
   </tr>
   {% endif %}
-  {% if website %}
+  {% if ship.website %}
   <tr>
     <th scope="row">Website</th>
     <td>{{ ship.website }}</td>
   </tr>
   {% endif %}
-  {% if former_names %}
+  {% if ship.former_names %}
   <tr>
     <th scope="row">Former Names</th>
     <td>{{ ship.former_names }}</td>
@@ -94,7 +94,7 @@
   {% endif %}
 </table>
 
-{% if description %}
+{% if ship.description %}
 <p>{{ ship.description }}</p>
 {% endif %}
 {% endblock %}
