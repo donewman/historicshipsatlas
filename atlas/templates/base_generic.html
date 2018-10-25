@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
   {% block title %}<title>Historic Ships Atlas</title>{% endblock %}
+  {% load static %}
+  {% block head %}<!-- template-specific static files -->{% endblock %}
 </head>
 <body>
-  {% block head %}<h1>Historic Ships Atlas</h1>{% endblock %}
-  {% block nav %}<li><a href="{% url 'index' %}">Home</a></li>{% endblock %}
-  {% block content %}<!-- default content text -->{% endblock %}
+  <h1>Historic Ships Atlas</h1>
+  <li><a href="{% url 'index' %}">Home</a></li>
+  {% block content %}<!-- page content -->{% endblock %}
 </body>
 </html>
