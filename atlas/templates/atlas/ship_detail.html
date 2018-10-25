@@ -4,14 +4,46 @@
 <h2>{{ ship.name }}</h2>
 
 <table>
+  {% if imo %}
+  <tr>
+    <th scope="row">IMO Number</th>
+    <td>{{ ship.imo }}</td>
+  </tr>
+  {% endif %}
+  {% if type %}
   <tr>
     <th scope="row">Type</th>
     <td>{{ ship.type }}</td>
   </tr>
+  {% endif %}
   <tr>
     <th scope="row">Year Built</th>
     <td>{{ ship.year }}</td>
   </tr>
+  {% if builder %}
+  <tr>
+    <th scope="row">Builder</th>
+    <td>{{ ship.builder }}</td>
+  </tr>
+  {% endif %}
+  {% if tonnage %}
+  <tr>
+    <th scope="row">Gross Tonnage</th>
+    <td>{{ ship.tonnage }}</td>
+  </tr>
+  {% endif %}
+  {% if length %}
+  <tr>
+    <th scope="row">Length (m)</th>
+    <td>{{ ship.length }}</td>
+  </tr>
+  {% endif %}
+  {% if beam %}
+  <tr>
+    <th scope="row">Beam (m)</th>
+    <td></td>
+  </tr>
+  {% endif %}
   <tr>
     <th scope="row">Location - City</th>
     <td>{{ ship.city }}</td>
@@ -20,13 +52,49 @@
     <th scope="row">Location - Country</th>
     <td>{{ ship.country }}</td>
   </tr>
+  {% if registers %}
   <tr>
-    <th scope="row">Current Use(s)</th>
-    <td>{{ ship.use }}</td>
+    <th scope="row">Historic Register(s)</th>
+    <td>{{ ship.registers }}</td>
   </tr>
+  {% endif %}
   <tr>
     <th scope="row">Current Status</th>
     <td>{{ ship.status }}</td>
   </tr>
+  {% if uses %}
+  <tr>
+    <th scope="row">Current Use(s)</th>
+    <td>{{ ship.uses }}</td>
+  </tr>
+  {% endif %}  
+  {% if flag %}
+  <tr>
+    <th scope="row">Flag</th>
+    <td>{{ ship.flag }}</td>
+  </tr>
+  {% endif %}
+  {% if owner %}
+  <tr>
+    <th scope="row">Owner</th>
+    <td>{{ ship.owner }}</td>
+  </tr>
+  {% endif %}
+  {% if website %}
+  <tr>
+    <th scope="row">Website</th>
+    <td>{{ ship.website }}</td>
+  </tr>
+  {% endif %}
+  {% if former_names %}
+  <tr>
+    <th scope="row">Former Names</th>
+    <td>{{ ship.former_names }}</td>
+  </tr>
+  {% endif %}
 </table>
+
+{% if description %}
+<p>{{ ship.description }}</p>
+{% endif %}
 {% endblock %}
