@@ -4,12 +4,20 @@ class Flag(models.Model):
 	# Defines flags.
 	flag=models.CharField(max_length=200)
 
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("flag_detail", args=[str(self.id)])
+
 	def __str__(self):
 		return self.flag
 
 class Type(models.Model):
 	# Defines types of ship.
 	type=models.CharField(max_length=200)
+
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("type_detail", args=[str(self.id)])
 
 	def __str__(self):
 		return self.type
@@ -19,12 +27,20 @@ class City(models.Model):
 	city_name=models.CharField(max_length=200)
 	city_region=models.CharField(max_length=200, blank=True)
 
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("city_detail", args=[str(self.id)])
+
 	def __str__(self):
 		return "%s, %s" % (self.city_name, self.city_region)
 
 class Country(models.Model):
 	# Defines countries.
 	country=models.CharField(max_length=200)
+
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("country_detail", args=[str(self.id)])
 
 	def __str__(self):
 		return self.country
@@ -35,12 +51,20 @@ class Builder(models.Model):
 	builder_city=models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
 	builder_country=models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
 
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("builder_detail", args=[str(self.id)])
+
 	def __str__(self):
 		return "%s, %s, %s" % (self.builder_name, self.builder_city, self.builder_country)
 
 class Register(models.Model):
 	# Defines historic registers.
 	register=models.CharField(max_length=200)
+
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("register_detail", args=[str(self.id)])
 
 	def __str__(self):
 		return self.register
@@ -49,6 +73,10 @@ class Use(models.Model):
 	# Defines uses.
 	use=models.CharField(max_length=200)
 
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("use_detail", args=[str(self.id)])
+
 	def __str__(self):
 		return self.use
 
@@ -56,12 +84,20 @@ class Status(models.Model):
 	# Defines statuses.
 	status=models.CharField(max_length=200)
 
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("status_detail", args=[str(self.id)])
+
 	def __str__(self):
 		return self.status
 
 class Owner(models.Model):
 	# Defines owners.
 	owner=models.CharField("Name of Owner", max_length=200)
+
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("owner_detail", args=[str(self.id)])
 
 	def __str__(self):
 		return self.owner
@@ -88,6 +124,10 @@ class Ship(models.Model):
 	description=models.TextField("Description", blank=True)
 	lat=models.FloatField("Latitude")
 	lon=models.FloatField("Longitude")
+
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("ship_detail", args=[str(self.id)])
 
 	def __str__(self):
 		return self.name

@@ -1,19 +1,6 @@
 {% extends "base_generic.html" %}
 
-{% block head %}
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css' rel='stylesheet' />
-{% endblock %}
-
 {% block content %}
   <h2>Home</h2>
   <p>Welcome to the Historic Ships Atlas!</p>
-  <div id='map' style='width: 800px; height: 600px;'></div>
-  <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZG91Z25ld21hbiIsImEiOiJjam5vODkwaHQwNm1qM3BxbHV6YmlidWFoIn0.3rN2nNWL5-Ie_euOFrChbg';
-    var map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v9'
-    });
-  </script>
 {% endblock %}

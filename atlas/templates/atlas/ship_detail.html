@@ -1,5 +1,10 @@
 {% extends "base_generic.html" %}
 
+{% block head %}
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script>
+  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css" rel="stylesheet" />
+{% endblock %}
+
 {% block content %}
 <h2>{{ ship.name }}</h2>
 
@@ -97,4 +102,53 @@
 {% if ship.description %}
 <p>{{ ship.description }}</p>
 {% endif %}
+
+<div id="map" style="height: 600px;"></div>
+
+<script>
+  mapboxgl.accessToken = "pk.eyJ1IjoiZG91Z25ld21hbiIsImEiOiJjam5vODkwaHQwNm1qM3BxbHV6YmlidWFoIn0.3rN2nNWL5-Ie_euOFrChbg";
+  var map = new mapboxgl.Map({
+      container: "map",
+      center: [{{ ship.lon }}, {{ ship.lat }}],
+      zoom: 12,
+      style: "mapbox://styles/mapbox/satellite-streets-v10"
+  });
+  map.on("load", function () {
+    var nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, "top-left");
+    map.addLayer({
+        "id": "points",
+        "type": "symbol",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [{{ ship.lon }}, {{ ship.lat }}]
+                    },
+                    "properties": {
+                        "title": "{{ ship.name }}",
+                        "icon": "harbor"
+                    }
+                }]
+            }
+        },
+        "layout": {
+            "icon-image": "{icon}-15",
+            "text-field": "{title}",
+            "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+            "text-offset": [0, 0.6],
+            "text-anchor": "top"
+        },
+        "paint": {
+            "text-color": "#ffffff",
+            "text-halo-color": "#000000",
+            "text-halo-width": 1,
+        }
+    });
+  });
+</script>
 {% endblock %}

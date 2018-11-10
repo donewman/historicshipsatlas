@@ -3,7 +3,10 @@ from django.views import generic
 from atlas.models import Ship
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, "index.html",)
 
 class ShipDetailView(generic.DetailView):
+    model = Ship
+
+class ShipListView(generic.ListView):
     model = Ship
