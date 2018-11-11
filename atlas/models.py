@@ -32,7 +32,10 @@ class City(models.Model):
 	    return reverse("city_detail", args=[str(self.id)])
 
 	def __str__(self):
-		return "%s, %s" % (self.city_name, self.city_region)
+		if self.city_region:
+			return "%s, %s" % (self.city_name, self.city_region)
+		else:
+			return self.city_name
 
 class Country(models.Model):
 	# Defines countries.

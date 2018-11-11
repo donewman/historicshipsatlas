@@ -10,92 +10,96 @@
 
 <table>
   {% if ship.imo %}
-  <tr>
-    <th scope="row">IMO Number</th>
-    <td>{{ ship.imo }}</td>
-  </tr>
+    <tr>
+      <th scope="row">IMO Number</th>
+      <td>{{ ship.imo }}</td>
+    </tr>
   {% endif %}
   {% if ship.type %}
-  <tr>
-    <th scope="row">Type</th>
-    <td>{{ ship.type }}</td>
-  </tr>
+    <tr>
+      <th scope="row">Type</th>
+      <td>{{ ship.type }}</td>
+    </tr>
   {% endif %}
   <tr>
     <th scope="row">Year Built</th>
     <td>{{ ship.year_built }}</td>
   </tr>
   {% if ship.builder %}
-  <tr>
-    <th scope="row">Builder</th>
-    <td>{{ ship.builder }}</td>
-  </tr>
+    <tr>
+      <th scope="row">Builder</th>
+      <td>{{ ship.builder }}</td>
+    </tr>
   {% endif %}
   {% if ship.tonnage %}
-  <tr>
-    <th scope="row">Gross Tonnage</th>
-    <td>{{ ship.tonnage }}</td>
-  </tr>
+    <tr>
+      <th scope="row">Gross Tonnage</th>
+      <td>{{ ship.tonnage }}</td>
+    </tr>
   {% endif %}
   {% if ship.length %}
-  <tr>
-    <th scope="row">Length (m)</th>
-    <td>{{ ship.length }}</td>
-  </tr>
+    <tr>
+      <th scope="row">Length (m)</th>
+      <td>{{ ship.length }}</td>
+    </tr>
   {% endif %}
   {% if ship.beam %}
-  <tr>
-    <th scope="row">Beam (m)</th>
-    <td></td>
-  </tr>
+    <tr>
+      <th scope="row">Beam (m)</th>
+      <td></td>
+    </tr>
   {% endif %}
   <tr>
-    <th scope="row">Location - City</th>
+    <th scope="row">Location &ndash; City</th>
     <td>{{ ship.city }}</td>
   </tr>
   <tr>
-    <th scope="row">Location - Country</th>
+    <th scope="row">Location &ndash; Country</th>
     <td>{{ ship.country }}</td>
   </tr>
-  {% if ship.registers %}
-  <tr>
-    <th scope="row">Historic Register(s)</th>
-    <td>{{ ship.registers }}</td>
-  </tr>
+  {% for registers in ship.registers.all %}
+    <tr>
+      <th scope="row">Historic Register</th>
+      <td>{{ register }}</td>
+    </tr>
+  {% if not forloop.last %}
   {% endif %}
+  {% endfor %}
   <tr>
     <th scope="row">Current Status</th>
     <td>{{ ship.status }}</td>
   </tr>
-  {% if ship.uses %}
-  <tr>
-    <th scope="row">Current Use(s)</th>
-    <td>{{ ship.uses }}</td>
-  </tr>
+  {% for use in ship.uses.all %}
+    <tr>
+      <th scope="row">Current Use</th>
+      <td>{{ use }}</td>
+    </tr>
+  {% if not forloop.last %}
   {% endif %}
+  {% endfor %}
   {% if ship.flag %}
-  <tr>
-    <th scope="row">Flag</th>
-    <td>{{ ship.flag }}</td>
-  </tr>
+    <tr>
+      <th scope="row">Flag</th>
+      <td>{{ ship.flag }}</td>
+    </tr>
   {% endif %}
   {% if ship.owner %}
-  <tr>
-    <th scope="row">Owner</th>
-    <td>{{ ship.owner }}</td>
-  </tr>
+    <tr>
+      <th scope="row">Owner</th>
+      <td>{{ ship.owner }}</td>
+    </tr>
   {% endif %}
   {% if ship.website %}
-  <tr>
-    <th scope="row">Website</th>
-    <td>{{ ship.website }}</td>
-  </tr>
+    <tr>
+      <th scope="row">Website</th>
+      <td>{{ ship.website }}</td>
+    </tr>
   {% endif %}
   {% if ship.former_names %}
-  <tr>
-    <th scope="row">Former Names</th>
-    <td>{{ ship.former_names }}</td>
-  </tr>
+    <tr>
+      <th scope="row">Former Names</th>
+      <td>{{ ship.former_names }}</td>
+    </tr>
   {% endif %}
 </table>
 
