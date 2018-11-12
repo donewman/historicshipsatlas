@@ -108,7 +108,7 @@ class Owner(models.Model):
 class Ship(models.Model):
 	# Defines each ship in the database.
 	name=models.CharField("Name", max_length=200)
-	imo=models.PositiveSmallIntegerField("IMO Number", null=True, blank=True)
+	imo=models.PositiveIntegerField("IMO Number", null=True, blank=True)
 	type=models.ForeignKey(Type, on_delete=models.SET_NULL, verbose_name="Type of Ship", null=True)
 	year_built=models.PositiveSmallIntegerField("Year Built")
 	builder=models.ForeignKey(Builder, on_delete=models.SET_NULL, verbose_name="Builder", null=True, blank=True)
