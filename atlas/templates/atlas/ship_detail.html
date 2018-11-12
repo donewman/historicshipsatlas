@@ -50,12 +50,8 @@
     </tr>
   {% endif %}
   <tr>
-    <th scope="row">Location &ndash; City</th>
-    <td>{{ ship.city }}</td>
-  </tr>
-  <tr>
-    <th scope="row">Location &ndash; Country</th>
-    <td>{{ ship.country }}</td>
+    <th scope="row">Location</th>
+    <td>{{ ship.city }}, {{ ship.country }}</td>
   </tr>
   {% for registers in ship.registers.all %}
     <tr>

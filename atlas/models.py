@@ -115,8 +115,8 @@ class Ship(models.Model):
 	tonnage=models.PositiveIntegerField("Gross Tonnage", null=True, blank=True)
 	length=models.FloatField("Length (m)", null=True, blank=True)
 	beam=models.FloatField("Beam (m)", null=True, blank=True)
-	city=models.ForeignKey(City, on_delete=models.SET_NULL, verbose_name="Location - City", null=True)
-	country=models.ForeignKey(Country, on_delete=models.SET_NULL, verbose_name="Location - Country", null=True)
+	city=models.ForeignKey(City, on_delete=models.SET_NULL, verbose_name="Location - City", null=True, blank=True)
+	country=models.ForeignKey(Country, on_delete=models.SET_NULL, verbose_name="Location - Country", null=True, blank=True)
 	registers=models.ManyToManyField(Register, verbose_name="Historic Register(s)", blank=True)
 	status=models.ForeignKey(Status, on_delete=models.SET_NULL, verbose_name="Current Status", null=True)
 	uses=models.ManyToManyField(Use, verbose_name="Current Use(s)", blank=True)
@@ -125,8 +125,8 @@ class Ship(models.Model):
 	website=models.URLField("Website", blank=True)
 	former_names=models.TextField("Former Names", blank=True)
 	description=models.TextField("Description", blank=True)
-	lat=models.FloatField("Latitude")
-	lon=models.FloatField("Longitude")
+	lat=models.FloatField("Latitude", null=True, blank=True)
+	lon=models.FloatField("Longitude", null=True, blank=True)
 
 	def get_absolute_url(self):
 	    from django.urls import reverse
