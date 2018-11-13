@@ -46,13 +46,15 @@
   {% if ship.beam %}
     <tr>
       <th scope="row">Beam (m)</th>
-      <td></td>
+      <td>{{ ship.beam }}</td>
     </tr>
   {% endif %}
-  <tr>
-    <th scope="row">Location</th>
-    <td>{{ ship.city }}, {{ ship.country }}</td>
-  </tr>
+  {% if ship.city and ship.country %}
+    <tr>
+      <th scope="row">Location</th>
+      <td>{{ ship.city }}, {{ ship.country }}</td>
+    </tr>
+  {% endif %}
   {% for registers in ship.registers.all %}
     <tr>
       <th scope="row">Historic Register</th>
@@ -103,8 +105,13 @@
 <p>{{ ship.description }}</p>
 {% endif %}
 
+{% if ship.status|stringformat:"s" != "Active" %}
 <div id="map" style="height: 600px;"></div>
+{% endif %}
+{% endblock %}
 
+{% block script %}
+{% if ship.status|stringformat:"s" != "Active" %}
 <script>
   mapboxgl.accessToken = "pk.eyJ1IjoiZG91Z25ld21hbiIsImEiOiJjam5vODkwaHQwNm1qM3BxbHV6YmlidWFoIn0.3rN2nNWL5-Ie_euOFrChbg";
   var map = new mapboxgl.Map({
@@ -151,4 +158,5 @@
     });
   });
 </script>
+{% endif %}
 {% endblock %}
