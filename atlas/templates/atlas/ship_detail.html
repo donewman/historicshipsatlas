@@ -111,6 +111,23 @@
 {% endblock %}
 
 {% block script %}
+{% if ship.status|stringformat:"s" == "Active" and ship.fleetmon %}
+<script>
+  fetch("https://apiv2.fleetmon.com/myfleet/{{ ship.fleetmon }}?apikey=4320bb316a86f03cccb627ce0f031905664d902c", {
+    credentials: "include",
+    headers: {
+      "Accept": "application/json"
+    },
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    console.log(myJson);
+  });
+</script>
+{% endif %}
+
 {% if ship.status|stringformat:"s" != "Active" %}
 <script>
   mapboxgl.accessToken = "pk.eyJ1IjoiZG91Z25ld21hbiIsImEiOiJjam5vODkwaHQwNm1qM3BxbHV6YmlidWFoIn0.3rN2nNWL5-Ie_euOFrChbg";
