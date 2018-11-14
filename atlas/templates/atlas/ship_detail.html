@@ -111,7 +111,7 @@
 {% endblock %}
 
 {% block script %}
-{% if ship.status|stringformat:"s" == "Active" and ship.fleetmon %}
+{% if ship.status|stringformat:"s" == "Active" %}
 <script>
   fetch("https://apiv2.fleetmon.com/myfleet/{{ ship.fleetmon }}?apikey=4320bb316a86f03cccb627ce0f031905664d902c", {
     credentials: "include",
