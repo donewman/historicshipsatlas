@@ -105,13 +105,12 @@
 <p>{{ ship.description }}</p>
 {% endif %}
 
-{% if ship.status|stringformat:"s" != "Active" %}
 <div id="map" style="height: 600px;"></div>
-{% endif %}
+
 {% endblock %}
 
 {% block script %}
-{% if ship.status|stringformat:"s" == "Active" %}
+{% if ship.status|stringformat:"s" == "Active" and ship.fleetmon %}
 <script>
   fetch("https://apiv2.fleetmon.com/myfleet/{{ ship.fleetmon }}?apikey=4320bb316a86f03cccb627ce0f031905664d902c", {
     credentials: "include",
@@ -123,7 +122,85 @@
     return response.json();
   })
   .then(function(myJson) {
-    console.log(myJson);
+    var ais = myJson;
+    mapboxgl.accessToken = "pk.eyJ1IjoiZG91Z25ld21hbiIsImEiOiJjam5vODkwaHQwNm1qM3BxbHV6YmlidWFoIn0.3rN2nNWL5-Ie_euOFrChbg";
+    var map = new mapboxgl.Map({
+        container: "map",
+        center: [ais.position.longitude, ais.position.latitude],
+        zoom: 6,
+        style: "mapbox://styles/mapbox/satellite-streets-v10"
+    });
+    map.on("load", function () {
+      var nav = new mapboxgl.NavigationControl();
+      map.addControl(nav, "top-left");
+      map.addLayer({
+          "id": "points",
+          "type": "symbol",
+          "source": {
+              "type": "geojson",
+              "data": {
+                  "type": "FeatureCollection",
+                  "features": [{
+                      "type": "Feature",
+                      "geometry": {
+                          "type": "Point",
+                          "coordinates": [ais.position.longitude, ais.position.latitude]
+                      },
+                      "properties": {
+                          "title": ais.name,
+                          "icon": "harbor"
+                      }
+                  }]
+              }
+          },
+          "layout": {
+              "icon-image": "{icon}-15",
+              "text-field": "{title}",
+              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+              "text-offset": [0, 0.6],
+              "text-anchor": "top"
+          },
+          "paint": {
+              "text-color": "#ffffff",
+              "text-halo-color": "#000000",
+              "text-halo-width": 1,
+          }
+      });
+      map.on("click", "points", function (e) {
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var description = "<p><strong>" +
+            ais.name +
+            "</strong></p><table><tr><th scope='row'>Location:</th><td>" +
+            ais.position.location_str +
+            "</td></tr><tr><th scope='row'>Latitude:</th><td>" +
+            ais.position.latitude +
+            "</td></tr><tr><th scope='row'>Longitude:</th><td>" +
+            ais.position.longitude +
+            "</td></tr><tr><th scope='row'>Navigational Status:</th><td>" +
+            ais.position.nav_status +
+            "</td></tr><tr><th scope='row'>Speed:</th><td>" +
+            ais.position.speed +
+            " kn</td></tr><tr><th scope='row'>Last Updated:</th><td>" +
+            ais.position.received +
+            "</td></tr><tr><th scope='row'>Destination:</th><td>" +
+            ais.voyage.destination +
+            "</td></table><p>AIS data from <a href='https://www.fleetmon.com/'>FleetMon</a>"
+          ;
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+          new mapboxgl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(description)
+              .addTo(map);
+      });
+      map.on("mouseenter", "points", function () {
+          map.getCanvas().style.cursor = "pointer";
+      });
+      map.on("mouseleave", "points", function () {
+          map.getCanvas().style.cursor = "";
+      });
+    });
   });
 </script>
 {% endif %}
@@ -134,7 +211,7 @@
   var map = new mapboxgl.Map({
       container: "map",
       center: [{{ ship.lon }}, {{ ship.lat }}],
-      zoom: 12,
+      zoom: 6,
       style: "mapbox://styles/mapbox/satellite-streets-v10"
   });
   map.on("load", function () {
