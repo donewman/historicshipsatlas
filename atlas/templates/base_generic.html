@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="utf-8">
   {% block title %}<title>Historic Ships Atlas</title>{% endblock %}
   {% load static %}
   {% block head %}<!-- template-specific static files -->{% endblock %}
@@ -12,6 +13,6 @@
     <li><a href="{% url 'ships' %}">Ships</a></li>
   </ul>
   {% block content %}<!-- page content -->{% endblock %}
+  {% block script %}<!-- script -->{% endblock %}
 </body>
-{% block script %}<!-- script -->{% endblock %}
 </html>
