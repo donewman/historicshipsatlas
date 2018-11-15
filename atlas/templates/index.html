@@ -24,5 +24,73 @@
     var nav = new mapboxgl.NavigationControl();
     map.addControl(nav, "top-left");
   });
+  fetch("https://apiv2.fleetmon.com/myfleet/?apikey=4320bb316a86f03cccb627ce0f031905664d902c", {
+    credentials: "include",
+    headers: {
+      "Accept": "application/json"
+    },
+  })
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    var ais = myJson;
+    var active_ships = [];
+    for (var i = 0; i < ais.vessels.length; i++) {
+      active_ships.push({
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [ais.vessels[i].position.longitude, ais.vessels[i].position.latitude]
+        },
+        "properties": {
+            "description": "<h3>" + ais.vessels[i].name + "</h3></p><table><tr><th scope='row'>Location:</th><td>" + ais.vessels[i].position.location_str + "</td></tr><tr><th scope='row'>Latitude:</th><td>" + ais.vessels[i].position.latitude + "</td></tr><tr><th scope='row'>Longitude:</th><td>" + ais.vessels[i].position.longitude + "</td></tr><tr><th scope='row'>Navigational Status:</th><td>" + ais.vessels[i].position.nav_status + "</td></tr><tr><th scope='row'>Speed:</th><td>" + ais.vessels[i].position.speed + " kn</td></tr><tr><th scope='row'>Last Updated:</th><td>" + ais.vessels[i].position.received + "</td></tr></table><p>AIS data from <a href='https://www.fleetmon.com/'>FleetMon</a>",
+            "icon": "harbor"
+        }
+      },
+    );}
+    map.on("load", function () {
+      map.addLayer({
+          "id": "active_ships",
+          "type": "symbol",
+          "source": {
+              "type": "geojson",
+              "data": {
+                  "type": "FeatureCollection",
+                  "features": active_ships
+              }
+          },
+          "layout": {
+              "icon-image": "{icon}-15",
+              "text-field": "{title}",
+              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+              "text-offset": [0, 0.6],
+              "text-anchor": "top"
+          },
+          "paint": {
+              "text-color": "#ffffff",
+              "text-halo-color": "#000000",
+              "text-halo-width": 1,
+          }
+      });
+      map.on("click", "active_ships", function (e) {
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var description = e.features[0].properties.description;
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+          new mapboxgl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(description)
+              .addTo(map);
+      });
+      map.on("mouseenter", "active_ships", function () {
+          map.getCanvas().style.cursor = "pointer";
+      });
+      map.on("mouseleave", "active_ships", function () {
+          map.getCanvas().style.cursor = "";
+      });
+    });
+  });
 </script>
 {% endblock %}
