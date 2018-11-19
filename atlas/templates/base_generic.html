@@ -11,7 +11,15 @@
   <ul>
     <li><a href="{% url 'index' %}">Home</a></li>
     <li><a href="{% url 'ships' %}">Ships</a></li>
+    <li><a href="{% url 'search' %}">Advanced Search</a></li>
   </ul>
+  <form action="search" method="post">
+    {% csrf_token %}
+    <table>
+    {{ basic_search_form }}
+    </table>
+    <input type="submit" value="Submit">
+  </form>
   {% block content %}<!-- page content -->{% endblock %}
   {% block script %}<!-- script -->{% endblock %}
 </body>

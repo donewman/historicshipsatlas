@@ -3,6 +3,7 @@ from atlas import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("search/", views.search, name="search"),
     path("ship/<slug:slug>", views.ShipDetailView.as_view(), name="ship_detail"),
     path("ships/", views.ShipListView.as_view(), name="ships"),
     path("type/<slug:slug>", views.TypeDetailView.as_view(), name="type_detail"),
