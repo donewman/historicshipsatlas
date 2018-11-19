@@ -14,15 +14,15 @@
 {% block script %}
 <script>
   var static_ships = [];
-  for (var i = 0; i < {{ static_ships|safe }}.length; i++) {
+  for (var i = 0; i < {{ static_ships_json|safe }}.length; i++) {
     static_ships.push({
       "type": "Feature",
       "geometry": {
           "type": "Point",
-          "coordinates": [{{ static_ships|safe }}[i].fields.lon, {{ static_ships|safe }}[i].fields.lat]
+          "coordinates": [{{ static_ships_json|safe }}[i].fields.lon, {{ static_ships_json|safe }}[i].fields.lat]
       },
       "properties": {
-          "description": "<h3>" + {{ static_ships|safe }}[i].fields.name + "</h3>",
+          "description": "<h3>" + {{ static_ships_json|safe }}[i].fields.name + " (" + {{static_ships_json|safe }}[i].fields.year_built + ")</h3><table><tr><th scope='row'>Location:</th><td>" + {{ static_ships_json|safe }}[i].fields.city + ", " + {{ static_ships_json|safe }}[i].fields.country + "</td></tr></table><p><a href='/atlas/ship/" + {{ static_ships_json|safe }}[i].fields.slug + "'>Details >>></a></p>",
           "icon": "harbor"
       }
     },
@@ -89,7 +89,7 @@
             "coordinates": [ais.vessels[i].position.longitude, ais.vessels[i].position.latitude]
         },
         "properties": {
-            "description": "<h3>" + ais.vessels[i].name + "</h3></p><table><tr><th scope='row'>Location:</th><td>" + ais.vessels[i].position.location_str + "</td></tr><tr><th scope='row'>Latitude:</th><td>" + ais.vessels[i].position.latitude + "</td></tr><tr><th scope='row'>Longitude:</th><td>" + ais.vessels[i].position.longitude + "</td></tr><tr><th scope='row'>Navigational Status:</th><td>" + ais.vessels[i].position.nav_status + "</td></tr><tr><th scope='row'>Speed:</th><td>" + ais.vessels[i].position.speed + " kn</td></tr><tr><th scope='row'>Last Updated:</th><td>" + ais.vessels[i].position.received + "</td></tr></table><p>AIS data from <a href='https://www.fleetmon.com/'>FleetMon</a>",
+            "description": "<h3>" + ais.vessels[i].name + " (" + ais.vessels[i].datasheet.year_built + ")</h3></p><table><tr><th scope='row'>Current Location:</th><td>" + ais.vessels[i].position.location_str + "</td></tr><tr><th scope='row'>Navigational Status:</th><td>" + ais.vessels[i].position.nav_status + "</td></tr><tr><th scope='row'>Speed:</th><td>" + ais.vessels[i].position.speed + " kn</td></tr><tr><th scope='row'>Last Updated:</th><td>" + ais.vessels[i].position.received + "</td></tr></table><p><a href='/atlas/ship/" + {{ active_ships_json|safe }}[i].fields.slug + "'>Details >>></a></p>",
             "icon": "triangle"
         }
       },

@@ -1,109 +1,139 @@
 from django.db import models
 
-class Flag(models.Model):
-	# Defines flags.
-	flag=models.CharField(max_length=200)
-
-	def get_absolute_url(self):
-	    from django.urls import reverse
-	    return reverse("flag_detail", args=[str(self.id)])
-
-	def __str__(self):
-		return self.flag
-
 class Type(models.Model):
 	# Defines types of ship.
-	type=models.CharField(max_length=200)
+	name = models.CharField(max_length=200, unique=True)
+	slug = models.SlugField(max_length=200, null=True, db_index=True)
+
+	def __str__(self):
+		return self.name
+
+	def natural_key(self):
+		return self.name
 
 	def get_absolute_url(self):
 	    from django.urls import reverse
-	    return reverse("type_detail", args=[str(self.id)])
-
-	def __str__(self):
-		return self.type
+	    return reverse("type_detail", args=[self.slug])
 
 class City(models.Model):
 	# Defines cities.
-	city_name=models.CharField(max_length=200)
-	city_region=models.CharField(max_length=200, blank=True)
+	name = models.CharField(max_length=200)
+	region = models.CharField(max_length=200, blank=True)
+	slug = models.SlugField(max_length=200, null=True, db_index=True)
+
+	class Meta:
+		unique_together = ("name", "region")
+
+	def __str__(self):
+		if self.region:
+			return "%s, %s" % (self.name, self.region)
+		else:
+			return self.name
+
+	def natural_key(self):
+		if self.region:
+			return "%s, %s" % (self.name, self.region)
+		else:
+			return self.name
 
 	def get_absolute_url(self):
 	    from django.urls import reverse
-	    return reverse("city_detail", args=[str(self.id)])
-
-	def __str__(self):
-		if self.city_region:
-			return "%s, %s" % (self.city_name, self.city_region)
-		else:
-			return self.city_name
+	    return reverse("city_detail", args=[self.slug])
 
 class Country(models.Model):
 	# Defines countries.
-	country=models.CharField(max_length=200)
+	name = models.CharField(max_length=200, unique=True)
+	slug = models.SlugField(max_length=200, null=True, db_index=True)
+
+	def __str__(self):
+		return self.name
+
+	def natural_key(self):
+		return self.name
 
 	def get_absolute_url(self):
 	    from django.urls import reverse
-	    return reverse("country_detail", args=[str(self.id)])
-
-	def __str__(self):
-		return self.country
+	    return reverse("country_detail", args=[self.slug])
 
 class Builder(models.Model):
 	# Defines builders.
-	builder_name=models.CharField(max_length=200)
-	builder_city=models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
-	builder_country=models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+	name = models.CharField(max_length=200)
+	city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True)
+	country = models.ForeignKey(Country, on_delete=models.SET_NULL, null=True)
+	slug = models.SlugField(max_length=200, null=True, db_index=True)
+
+	class Meta:
+		unique_together = ("name", "city", "country")
+
+	def __str__(self):
+		return "%s, %s, %s" % (self.name, self.city, self.country)
+
+	def natural_key(self):
+		return "%s, %s, %s" % (self.name, self.city, self.country)
 
 	def get_absolute_url(self):
 	    from django.urls import reverse
-	    return reverse("builder_detail", args=[str(self.id)])
-
-	def __str__(self):
-		return "%s, %s, %s" % (self.builder_name, self.builder_city, self.builder_country)
+	    return reverse("builder_detail", args=[self.slug])
 
 class Register(models.Model):
 	# Defines historic registers.
-	register=models.CharField(max_length=200)
+	name = models.CharField(max_length=200, unique=True)
+	slug = models.SlugField(max_length=200, null=True, db_index=True)
+
+	def __str__(self):
+		return self.name
+
+	def natural_key(self):
+		return self.name
 
 	def get_absolute_url(self):
 	    from django.urls import reverse
-	    return reverse("register_detail", args=[str(self.id)])
-
-	def __str__(self):
-		return self.register
-
-class Use(models.Model):
-	# Defines uses.
-	use=models.CharField(max_length=200)
-
-	def get_absolute_url(self):
-	    from django.urls import reverse
-	    return reverse("use_detail", args=[str(self.id)])
-
-	def __str__(self):
-		return self.use
+	    return reverse("register_detail", args=[self.slug])
 
 class Status(models.Model):
 	# Defines statuses.
-	status=models.CharField(max_length=200)
+	name = models.CharField(max_length=200, unique=True)
+	slug = models.SlugField(max_length=200, null=True, db_index=True)
+
+	def __str__(self):
+		return self.name
+
+	def natural_key(self):
+		return self.name
 
 	def get_absolute_url(self):
 	    from django.urls import reverse
-	    return reverse("status_detail", args=[str(self.id)])
+	    return reverse("status_detail", args=[self.slug])
+
+class Use(models.Model):
+	# Defines uses.
+	name = models.CharField(max_length=200, unique=True)
+	slug = models.SlugField(max_length=200, null=True, db_index=True)
 
 	def __str__(self):
-		return self.status
+		return self.name
+
+	def natural_key(self):
+		return self.name
+
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("use_detail", args=[self.slug])
 
 class Owner(models.Model):
 	# Defines owners.
-	owner=models.CharField("Name of Owner", max_length=200)
+	name = models.CharField(max_length=200, unique=True)
+	slug = models.SlugField(max_length=200, null=True, db_index=True)
+
+	def __str__(self):
+		return self.name
+
+	def natural_key(self):
+		return self.name
 
 	def get_absolute_url(self):
 	    from django.urls import reverse
-	    return reverse("owner_detail", args=[str(self.id)])
-
-	def __str__(self):
-		return self.owner
+	    return reverse("owner_detail", args=[self.slug])
 
 class Ship(models.Model):
 	# Defines each ship in the database.
@@ -121,17 +151,17 @@ class Ship(models.Model):
 	registers=models.ManyToManyField(Register, verbose_name="Historic Register(s)", blank=True)
 	status=models.ForeignKey(Status, on_delete=models.SET_NULL, verbose_name="Current Status", null=True)
 	uses=models.ManyToManyField(Use, verbose_name="Current Use(s)", blank=True)
-	flag=models.ForeignKey(Flag, on_delete=models.SET_NULL, verbose_name="Flag", null=True, blank=True)
 	owner=models.ForeignKey(Owner, on_delete=models.SET_NULL, verbose_name="Owner", null=True, blank=True)
 	website=models.URLField("Website", blank=True)
 	former_names=models.TextField("Former Names", blank=True)
 	description=models.TextField("Description", blank=True)
 	lat=models.FloatField("Latitude", null=True, blank=True)
 	lon=models.FloatField("Longitude", null=True, blank=True)
-
-	def get_absolute_url(self):
-	    from django.urls import reverse
-	    return reverse("ship_detail", args=[str(self.id)])
+	slug=models.SlugField("Slug", max_length=205, null=True, db_index=True)
 
 	def __str__(self):
 		return self.name
+
+	def get_absolute_url(self):
+	    from django.urls import reverse
+	    return reverse("ship_detail", args=[self.slug])

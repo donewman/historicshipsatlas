@@ -1,0 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Builder: {{ builder.name }}</h2>
+
+<ul>
+  {% for ship in builder.ship_set.all %}
+  <li><a href="{{ ship.get_absolute_url }}">{{ ship.name }}</a></li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,14 +1,39 @@
 from django.contrib import admin
 
-from atlas.models import Flag, Type, Builder, City, Country, Register, Use, Status, Owner, Ship
+from atlas.models import Type, City, Country, Builder, Register, Status, Use, Owner, Ship
 
-admin.site.register(Flag)
-admin.site.register(Type)
-admin.site.register(Builder)
-admin.site.register(City)
-admin.site.register(Country)
-admin.site.register(Register)
-admin.site.register(Use)
-admin.site.register(Status)
-admin.site.register(Owner)
-admin.site.register(Ship)
+class TypeAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+admin.site.register(Type, TypeAdmin)
+
+class CityAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name", "region")}
+admin.site.register(City, CityAdmin)
+
+class CountryAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+admin.site.register(Country, CountryAdmin)
+
+class BuilderAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+admin.site.register(Builder, BuilderAdmin)
+
+class RegisterAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+admin.site.register(Register, RegisterAdmin)
+
+class StatusAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+admin.site.register(Status, StatusAdmin)
+
+class UseAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+admin.site.register(Use, UseAdmin)
+
+class OwnerAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+admin.site.register(Owner, OwnerAdmin)
+
+class ShipAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name", "year_built")}
+admin.site.register(Ship, ShipAdmin)

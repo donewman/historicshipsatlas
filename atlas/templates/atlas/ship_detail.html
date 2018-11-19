@@ -18,7 +18,7 @@
   {% if ship.type %}
     <tr>
       <th scope="row">Type</th>
-      <td>{{ ship.type }}</td>
+      <td><a href="{{ ship.type.get_absolute_url }}">{{ ship.type }}</a></td>
     </tr>
   {% endif %}
   <tr>
@@ -28,7 +28,7 @@
   {% if ship.builder %}
     <tr>
       <th scope="row">Builder</th>
-      <td>{{ ship.builder }}</td>
+      <td><a href="{{ ship.builder.get_absolute_url }}">{{ ship.builder }}</a></td>
     </tr>
   {% endif %}
   {% if ship.tonnage %}
@@ -52,39 +52,33 @@
   {% if ship.city and ship.country %}
     <tr>
       <th scope="row">Location</th>
-      <td>{{ ship.city }}, {{ ship.country }}</td>
+      <td><a href="{{ ship.city.get_absolute_url }}">{{ ship.city }}</a>, <a href="{{ ship.country.get_absolute_url }}">{{ ship.country }}</a></td>
     </tr>
   {% endif %}
   {% for registers in ship.registers.all %}
     <tr>
-      <th scope="row">Historic Register</th>
-      <td>{{ register }}</td>
+      <th scope="row">Historic Register(s)</th>
+      <td><a href="{{ register.get_absolute_url }}">{{ register }}</a></td>
     </tr>
   {% if not forloop.last %}
   {% endif %}
   {% endfor %}
   <tr>
     <th scope="row">Current Status</th>
-    <td>{{ ship.status }}</td>
+    <td><a href="{{ ship.status.get_absolute_url }}">{{ ship.status }}</a></td>
   </tr>
   {% for use in ship.uses.all %}
     <tr>
       <th scope="row">Current Use</th>
-      <td>{{ use }}</td>
+      <td><a href="{{ use.get_absolute_url }}">{{ use }}</a></td>
     </tr>
   {% if not forloop.last %}
   {% endif %}
   {% endfor %}
-  {% if ship.flag %}
-    <tr>
-      <th scope="row">Flag</th>
-      <td>{{ ship.flag }}</td>
-    </tr>
-  {% endif %}
   {% if ship.owner %}
     <tr>
       <th scope="row">Owner</th>
-      <td>{{ ship.owner }}</td>
+      <td><a href="{{ ship.owner.get_absolute_url }}">{{ ship.owner }}</a></td>
     </tr>
   {% endif %}
   {% if ship.website %}
