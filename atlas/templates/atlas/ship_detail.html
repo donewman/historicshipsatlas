@@ -55,26 +55,34 @@
       <td><a href="{{ ship.city.get_absolute_url }}">{{ ship.city }}</a>, <a href="{{ ship.country.get_absolute_url }}">{{ ship.country }}</a></td>
     </tr>
   {% endif %}
-  {% for registers in ship.registers.all %}
-    <tr>
-      <th scope="row">Historic Register(s)</th>
-      <td><a href="{{ register.get_absolute_url }}">{{ register }}</a></td>
-    </tr>
-  {% if not forloop.last %}
+  {% if ship.registers.all %}
+      <tr>
+        <th scope="row">Historic Register(s)</th>
+        <td>
+          <ul>
+            {% for registers in ship.registers.all %}
+              <li><a href="{{ register.get_absolute_url }}">{{ register }}</a></li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
   {% endif %}
-  {% endfor %}
   <tr>
     <th scope="row">Current Status</th>
     <td><a href="{{ ship.status.get_absolute_url }}">{{ ship.status }}</a></td>
   </tr>
-  {% for use in ship.uses.all %}
+  {% if ship.uses.all %}
     <tr>
-      <th scope="row">Current Use</th>
-      <td><a href="{{ use.get_absolute_url }}">{{ use }}</a></td>
+      <th scope="row">Current Use(s)</th>
+      <td>
+        <ul>
+          {% for use in ship.uses.all %}
+            <li><a href="{{ use.get_absolute_url }}">{{ use }}</a></li>
+          {% endfor %}
+        </ul>
+      </td>
     </tr>
-  {% if not forloop.last %}
   {% endif %}
-  {% endfor %}
   {% if ship.owner %}
     <tr>
       <th scope="row">Owner</th>
@@ -105,7 +113,7 @@
 
 {% block script %}
 {% if ship.status|stringformat:"s" == "Active" and ship.fleetmon %}
-<script>
+<script type="text/javascript">
   fetch("https://apiv2.fleetmon.com/myfleet/{{ ship.fleetmon }}?apikey=4320bb316a86f03cccb627ce0f031905664d902c", {
     credentials: "include",
     headers: {
@@ -164,12 +172,8 @@
           var coordinates = e.features[0].geometry.coordinates.slice();
           var description = "<p><strong>" +
             ais.name +
-            "</strong></p><table><tr><th scope='row'>Location:</th><td>" +
+            "</strong></p><table><th scope='row'>Current Location:</th><td>" +
             ais.position.location_str +
-            "</td></tr><tr><th scope='row'>Latitude:</th><td>" +
-            ais.position.latitude +
-            "</td></tr><tr><th scope='row'>Longitude:</th><td>" +
-            ais.position.longitude +
             "</td></tr><tr><th scope='row'>Navigational Status:</th><td>" +
             ais.position.nav_status +
             "</td></tr><tr><th scope='row'>Speed:</th><td>" +
@@ -178,7 +182,7 @@
             ais.position.received +
             "</td></tr><tr><th scope='row'>Destination:</th><td>" +
             ais.voyage.destination +
-            "</td></table><p>AIS data from <a href='https://www.fleetmon.com/'>FleetMon</a>"
+            "</td></table><p>AIS data from <a href='https://www.fleetmon.com/'>FleetMon</a></p>"
           ;
           while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
               coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;

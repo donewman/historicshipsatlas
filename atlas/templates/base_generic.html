@@ -10,10 +10,9 @@
   <h1>Historic Ships Atlas</h1>
   <ul>
     <li><a href="{% url 'index' %}">Home</a></li>
-    <li><a href="{% url 'ships' %}">Ships</a></li>
-    <li><a href="{% url 'search' %}">Advanced Search</a></li>
+    <li><a href="{% url 'ships' %}">All Ships</a></li>
   </ul>
-  <form action="search" method="post">
+  <form action="/atlas/search/" method="get">
     {% csrf_token %}
     <table>
     {{ basic_search_form }}

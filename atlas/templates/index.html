@@ -12,17 +12,17 @@
 {% endblock %}
 
 {% block script %}
-<script>
-  var static_ships = [];
+<script type="text/javascript">
+  var static_ships_features = [];
   for (var i = 0; i < {{ static_ships_json|safe }}.length; i++) {
-    static_ships.push({
+    static_ships_features.push({
       "type": "Feature",
       "geometry": {
           "type": "Point",
           "coordinates": [{{ static_ships_json|safe }}[i].fields.lon, {{ static_ships_json|safe }}[i].fields.lat]
       },
       "properties": {
-          "description": "<h3>" + {{ static_ships_json|safe }}[i].fields.name + " (" + {{static_ships_json|safe }}[i].fields.year_built + ")</h3><table><tr><th scope='row'>Location:</th><td>" + {{ static_ships_json|safe }}[i].fields.city + ", " + {{ static_ships_json|safe }}[i].fields.country + "</td></tr></table><p><a href='/atlas/ship/" + {{ static_ships_json|safe }}[i].fields.slug + "'>Details >>></a></p>",
+          "description": "<h3>" + {{ static_ships_json|safe }}[i].fields.name + " (" + {{static_ships_json|safe }}[i].fields.year_built + ")</h3><table><tr><td>" + {{ static_ships_json|safe}}[i].fields.type + "</td></tr><tr><td>" + {{ static_ships_json|safe }}[i].fields.status + "</td></tr><tr><td>" + {{ static_ships_json|safe }}[i].fields.city + ", " + {{ static_ships_json|safe }}[i].fields.country + "</td></tr></table><p><a href='/atlas/ship/" + {{ static_ships_json|safe }}[i].fields.slug + "'>Ship Details >>></a></p>",
           "icon": "harbor"
       }
     },
@@ -44,7 +44,7 @@
             "type": "geojson",
             "data": {
                 "type": "FeatureCollection",
-                "features": static_ships
+                "features": static_ships_features
             }
         },
         "layout": {
@@ -80,16 +80,18 @@
   })
   .then(function(myJson) {
     var ais = myJson;
-    var active_ships = [];
+    console.log(ais);
+    console.log({{ active_ships_json|safe }});
+    var active_ships_features = [];
     for (var i = 0; i < ais.vessels.length; i++) {
-      active_ships.push({
+      active_ships_features.push({
         "type": "Feature",
         "geometry": {
             "type": "Point",
             "coordinates": [ais.vessels[i].position.longitude, ais.vessels[i].position.latitude]
         },
         "properties": {
-            "description": "<h3>" + ais.vessels[i].name + " (" + ais.vessels[i].datasheet.year_built + ")</h3></p><table><tr><th scope='row'>Current Location:</th><td>" + ais.vessels[i].position.location_str + "</td></tr><tr><th scope='row'>Navigational Status:</th><td>" + ais.vessels[i].position.nav_status + "</td></tr><tr><th scope='row'>Speed:</th><td>" + ais.vessels[i].position.speed + " kn</td></tr><tr><th scope='row'>Last Updated:</th><td>" + ais.vessels[i].position.received + "</td></tr></table><p><a href='/atlas/ship/" + {{ active_ships_json|safe }}[i].fields.slug + "'>Details >>></a></p>",
+            "description": "<h3>" + ais.vessels[i].name + " (" + ais.vessels[i].datasheet.year_built + ")</h3></p><table><caption>AIS Data from <a href='http://www.fleetmon.com'>FleetMon</a></caption><tr><th scope='row'>Current Location:</th><td>" + ais.vessels[i].position.location_str + "</td></tr><tr><th scope='row'>Navigational Status:</th><td>" + ais.vessels[i].position.nav_status + "</td></tr><tr><th scope='row'>Speed:</th><td>" + ais.vessels[i].position.speed + " kn</td></tr><tr><th scope='row'>Last Updated:</th><td>" + ais.vessels[i].position.received + "</td></tr><tr><th scope='row'>Destination:</th><td>" + ais.vessels[i].voyage.destination + "</table><p><a href='/atlas/ship/" + ais.vessels[i].vessel_id + "'>Ship Details >>></a></p>",
             "icon": "triangle"
         }
       },
@@ -102,7 +104,7 @@
               "type": "geojson",
               "data": {
                   "type": "FeatureCollection",
-                  "features": active_ships
+                  "features": active_ships_features
               }
           },
           "layout": {
