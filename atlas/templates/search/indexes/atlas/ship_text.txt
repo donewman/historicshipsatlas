@@ -1,0 +1,11 @@
+{{ object.name }}
+{{ object.imo }}
+{{ object.type }}
+{{ object.builder }}
+{{ object.city }}
+{{ object.registers.all }}
+{{ object.status }}
+{{ object.uses.all }}
+{{ object.owner }}
+{{ object.former_names }}
+{{ object.description }}

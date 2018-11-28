@@ -25,6 +25,7 @@ from django.conf.urls import include
 
 urlpatterns += [
     path('atlas/', include('atlas.urls')),
+    path('search/', include('haystack.urls')),
 ]
 
 # Add URL maps to redirect the base URL to atlas
