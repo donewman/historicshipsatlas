@@ -20,7 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 ]
 
-# Include paths from atlas
+# Include paths from atlas and haystack
 from django.conf.urls import include
 
 urlpatterns += [

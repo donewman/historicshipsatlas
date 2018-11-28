@@ -1,3 +1,7 @@
+"""
+Search indexes for haystack search in atlas app in historicshipsatlas project.
+"""
+
 from haystack import indexes
 from atlas.models import Ship
 
