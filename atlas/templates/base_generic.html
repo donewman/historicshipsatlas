@@ -11,8 +11,14 @@
   <ul>
     <li><a href="{% url 'index' %}">Home</a></li>
     <li><a href="{% url 'ships' %}">All Ships</a></li>
-    <li><a href="{% url 'haystack_search' %}">Search</a></li>
   </ul>
+  <form action="/search/" method="get">
+    {% csrf_token %}
+    <table>
+      {{ basic_search_form }}
+    </table>
+    <input type="submit" value="Search">
+  </form>
   {% block content %}<!-- page content -->{% endblock %}
   {% block script %}<!-- script -->{% endblock %}
 </body>

@@ -1,11 +1,33 @@
 {{ object.name }}
-{{ object.imo }}
-{{ object.type }}
-{{ object.builder }}
-{{ object.city }}
-{{ object.registers.all }}
+{% if object.imo %}
+  {{ object.imo }}
+{% endif %}
+{% if object.type %}
+  {{ object.type }}
+{% endif %}
+{{ object.year_built }}
+{% if object.builder %}
+  {{ object.builder }}
+{% endif %}
+{% if object.city %}
+  {{ object.city }}
+{% endif %}
+{% if object.country %}
+  {{ object.country }}
+{% endif %}
+{% if object.registers.all %}
+  {{ object.registers.all }}
+{% endif %}
 {{ object.status }}
-{{ object.uses.all }}
-{{ object.owner }}
-{{ object.former_names }}
-{{ object.description }}
+{% if object.uses.all %}
+  {{ object.uses.all }}
+{% endif %}
+{% if object.owner %}
+  {{ object.owner }}
+{% endif %}
+{% if object.former_names %}
+  {{ object.former_names }}
+{% endif %}
+{% if object.description %}
+  {{ object.description }}
+{% endif %}
