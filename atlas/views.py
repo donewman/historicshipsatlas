@@ -1,7 +1,3 @@
-"""
-Views for atlas app in historicshipsatlas project.
-"""
-
 from django.shortcuts import render
 # Import generic detail and list views
 from django.views.generic import DetailView, ListView

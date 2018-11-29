@@ -11,9 +11,9 @@
   <ul>
     <li><a href="{% url 'index' %}">Home</a></li>
     <li><a href="{% url 'ships' %}">All Ships</a></li>
+    <li><a href="{% url 'haystack_search' %}">Advanced Search</a></li>
   </ul>
   <form action="/search/" method="get">
-    {% csrf_token %}
     <table>
       {{ basic_search_form }}
     </table>

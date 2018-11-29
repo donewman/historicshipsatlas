@@ -1,7 +1,3 @@
-"""
-Models for atlas app in historicshipsatlas project.
-"""
-
 from django.db import models
 
 # Define types of ship
