@@ -1,12 +1,13 @@
 {% extends "base_generic.html" %}
 
 {% block head %}
-  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script>
   <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
 <h2>{{ ship.name }}</h2>
+
+<h3>Ship Details</h3>
 
 <table>
   {% if ship.imo %}
@@ -107,11 +108,14 @@
 <p>{{ ship.description }}</p>
 {% endif %}
 
+<h3>Map</h3>
+
 <div id="map" style="height: 600px;"></div>
 
 {% endblock %}
 
 {% block script %}
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script>
 {% if ship.status|stringformat:"s" == "Active" and ship.fleetmon %}
 <script type="text/javascript">
   fetch('https://apiv2.fleetmon.com/myfleet/{{ ship.fleetmon }}?apikey=4320bb316a86f03cccb627ce0f031905664d902c', {

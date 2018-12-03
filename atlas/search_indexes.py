@@ -13,9 +13,17 @@ class ShipIndex(indexes.SearchIndex, indexes.Indexable):
     beam = indexes.IntegerField(model_attr='beam', null=True)
     city = indexes.CharField(model_attr='city', null=True)
     country = indexes.CharField(model_attr='country', null=True)
+    registers = indexes.MultiValueField(null=True)
     status = indexes.CharField(model_attr='status', null=True)
+    uses = indexes.MultiValueField(null=True)
     owner = indexes.CharField(model_attr='owner', null=True)
     former_names = indexes.CharField(model_attr='former_names', null=True)
 
     def get_model(self):
         return Ship
+
+    def prepare_registers(self, obj):
+        return [registers.id for registers in obj.registers.all().order_by('name')]
+
+    def prepare_uses(self, obj):
+        return [uses.id for uses in obj.uses.all().order_by('name')]

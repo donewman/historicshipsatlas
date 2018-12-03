@@ -3,7 +3,7 @@ from haystack.forms import SearchForm
 from atlas.models import Ship, Type, City, Country, Builder, Register, Status, Use, Owner
 
 class BasicSearchForm(SearchForm):
-    q = forms.CharField(label='Search:', max_length=200)
+    q = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-group-field'}))
 
 class AdvancedSearchForm(SearchForm):
     q = forms.CharField(label='Keyword(s):', max_length=200, required=False)
@@ -27,8 +27,10 @@ class AdvancedSearchForm(SearchForm):
     owner = forms.CharField(label='Owner:', max_length=200, required=False)
     former_names = forms.CharField(label='Former Names:', max_length=200, required=False)
 
+    def no_query_found(self):
+        return self.searchqueryset.all()
+
     def search(self):
-        # First, store the SearchQuerySet received from other processing.
         sqs = super(AdvancedSearchForm, self).search()
 
         if not self.is_valid():

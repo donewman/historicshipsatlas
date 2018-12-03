@@ -1,25 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   {% block title %}<title>Historic Ships Atlas</title>{% endblock %}
   {% load static %}
+  <link rel="stylesheet" href="{% static 'atlas/css/foundation.css' %}" />
   {% block head %}<!-- template-specific static files -->{% endblock %}
 </head>
 <body>
-  <h1>Historic Ships Atlas</h1>
-  <ul>
-    <li><a href="{% url 'index' %}">Home</a></li>
-    <li><a href="{% url 'ships' %}">All Ships</a></li>
-    <li><a href="{% url 'haystack_search' %}">Advanced Search</a></li>
-  </ul>
-  <form action="/search/" method="get">
-    <table>
-      {{ basic_search_form }}
-    </table>
-    <input type="submit" value="Search">
-  </form>
-  {% block content %}<!-- page content -->{% endblock %}
+  <div class="grid-container">
+    <nav class="top-bar">
+      <div class="top-bar-left">
+        <ul class="menu">
+          <li class="menu-text">Historic Ships Atlas</li>
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'ships' %}">All Ships</a></li>
+          <li><a href="{% url 'haystack_search' %}">Advanced Search</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+          <form class="input-group" action="/search/" method="get">
+            {{ basic_search_form.q }}
+            <div class="input-group-button">
+              <input type="submit" class="button" value="Search">
+            </div>
+          </form>
+      </div>
+    </nav>
+    {% block content %}<!-- page content -->{% endblock %}
+  </div>
+  <script src="{% static 'atlas/js/vendor/jquery.js' %}"></script>
+  <script src="{% static 'atlas/js/vendor/what-input.js' %}"></script>
+  <script src="{% static 'js/vendor/foundation.min.js' %}"></script>
+  <script>
+    $(document).foundation();
+  </script>
   {% block script %}<!-- script -->{% endblock %}
 </body>
 </html>
