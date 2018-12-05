@@ -12,21 +12,22 @@ class AdvancedSearchForm(SearchForm):
     type = forms.ModelMultipleChoiceField(label='Type:', queryset=Type.objects.all(), required=False)
     year_built_from = forms.IntegerField(label='Year Built (From):', required=False)
     year_built_to = forms.IntegerField(label='Year Built (To):', required=False)
-    builder = forms.ModelMultipleChoiceField(label='Builder:', queryset=Builder.objects.all(), required=False)
+    builder = forms.CharField(label='Builder:', max_length=200, required=False)
     tonnage_from = forms.IntegerField(label='Gross Tonnage (From):', required=False)
     tonnage_to = forms.IntegerField(label='Gross Tonnage (To):', required=False)
     length_from = forms.IntegerField(label='Length (m) (From):', required=False)
     length_to = forms.IntegerField(label='Length (m) (To):', required=False)
     beam_from = forms.IntegerField(label='Beam (m) (From):', required=False)
     beam_to = forms.IntegerField(label='Beam (m) (To):', required=False)
-    city = forms.ModelMultipleChoiceField(label='Location - City:', queryset=City.objects.all(), required=False)
+    city = forms.CharField(label='Location - City:', max_length=200, required=False)
     country = forms.ModelMultipleChoiceField(label='Location - Country:', queryset=Country.objects.all(), required=False)
-    register = forms.ModelMultipleChoiceField(label='Historic Register:', queryset=Register.objects.all(), required=False)
+    register = forms.ModelMultipleChoiceField(label='Historic Register(s):', queryset=Register.objects.all(), required=False)
     status = forms.ModelMultipleChoiceField(label='Status:', queryset=Status.objects.all(), required=False)
-    use = forms.ModelMultipleChoiceField(label='Use:', queryset=Use.objects.all(), required=False)
+    use = forms.ModelMultipleChoiceField(label='Use(s):', queryset=Use.objects.all(), required=False)
     owner = forms.CharField(label='Owner:', max_length=200, required=False)
     former_names = forms.CharField(label='Former Names:', max_length=200, required=False)
 
+    # Returns all results instead of empty SearchQuerySet when 'q' is blank
     def no_query_found(self):
         return self.searchqueryset.all()
 

@@ -12,6 +12,7 @@
 
 {% block script %}
 <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script>
+<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
 <script type="text/javascript">
   var static_ships_features = [];
   for (var i = 0; i < {{ static_ships_json|safe }}.length; i++) {
@@ -31,7 +32,7 @@
   var map = new mapboxgl.Map({
       container: 'map',
       center: [0, 0],
-      zoom: 2,
+      zoom: 1,
       style: 'mapbox://styles/mapbox/satellite-streets-v10'
   });
   map.on('load', function () {

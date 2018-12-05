@@ -57,16 +57,16 @@
     </tr>
   {% endif %}
   {% if ship.registers.all %}
-      <tr>
-        <th scope="row">Historic Register(s)</th>
-        <td>
-          <ul>
-            {% for registers in ship.registers.all %}
-              <li><a href="{{ register.get_absolute_url }}">{{ register }}</a></li>
-            {% endfor %}
-          </ul>
-        </td>
-      </tr>
+    <tr>
+      <th scope="row">Historic Register(s)</th>
+      <td>
+        <ul>
+          {% for register in ship.registers.all %}
+            <li><a href="{{ register.get_absolute_url }}">{{ register }}</a></li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
   {% endif %}
   <tr>
     <th scope="row">Current Status</th>
@@ -93,19 +93,28 @@
   {% if ship.website %}
     <tr>
       <th scope="row">Website</th>
-      <td>{{ ship.website }}</td>
+      <td><a href="{{ ship.website }}" target="_blank">{{ ship.website }}</a></td>
     </tr>
   {% endif %}
   {% if ship.former_names %}
     <tr>
       <th scope="row">Former Names</th>
-      <td>{{ ship.former_names }}</td>
+      <td>
+        <ul>
+          {% autoescape off %}
+          {{ ship.former_names }}
+          {% endautoescape %}
+        </ul>
+      </td>
     </tr>
   {% endif %}
 </table>
 
 {% if ship.description %}
-<p>{{ ship.description }}</p>
+  <h3>Description</h3>
+  {% autoescape off %}
+  {{ ship.description }}
+  {% endautoescape %}
 {% endif %}
 
 <h3>Map</h3>
