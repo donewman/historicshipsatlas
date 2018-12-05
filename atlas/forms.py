@@ -2,9 +2,11 @@ from django import forms
 from haystack.forms import SearchForm
 from atlas.models import Ship, Type, City, Country, Builder, Register, Status, Use, Owner
 
+# Basic search form--appears on all pages
 class BasicSearchForm(SearchForm):
-    q = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-group-field'}))
+    q = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'input-group-field'}), required=False)
 
+# Advanced search form--appears on search page only
 class AdvancedSearchForm(SearchForm):
     q = forms.CharField(label='Keyword(s):', max_length=200, required=False)
     name = forms.CharField(label='Name:', max_length=200, required=False)
@@ -27,21 +29,24 @@ class AdvancedSearchForm(SearchForm):
     owner = forms.CharField(label='Owner:', max_length=200, required=False)
     former_names = forms.CharField(label='Former Names:', max_length=200, required=False)
 
-    # Returns all results instead of empty SearchQuerySet when 'q' is blank
+    # Overrides no_query_found() in haystack.forms to return all results instead of empty SearchQuerySet when 'q' is blank
     def no_query_found(self):
         return self.searchqueryset.all()
 
     def search(self):
+        # Stores the SearchQuerySet received from other processing
         sqs = super(AdvancedSearchForm, self).search()
 
+        # Return all results if 'q' is blank
         if not self.is_valid():
             return self.no_query_found()
 
+        # Filter sqs based on form fields
         if self.cleaned_data['name']:
-            sqs = sqs.filter(name=self.cleaned_data['name'])
+            sqs = sqs.filter(name__contains=self.cleaned_data['name'])
 
         if self.cleaned_data['imo']:
-            sqs = sqs.filter(imo=self.cleaned_data['imo'])
+            sqs = sqs.filter(imo__exact=self.cleaned_data['imo'])
 
         if self.cleaned_data['type']:
             sqs = sqs.filter(type=self.cleaned_data['type'])
@@ -53,7 +58,7 @@ class AdvancedSearchForm(SearchForm):
             sqs = sqs.filter(year_built__lte=self.cleaned_data['year_built_to'])
 
         if self.cleaned_data['builder']:
-            sqs = sqs.filter(type=self.cleaned_data['builder'])
+            sqs = sqs.filter(builder__contains=self.cleaned_data['builder'])
 
         if self.cleaned_data['tonnage_from']:
             sqs = sqs.filter(tonnage__gte=self.cleaned_data['tonnage_from'])
@@ -74,7 +79,7 @@ class AdvancedSearchForm(SearchForm):
             sqs = sqs.filter(beam__lte=self.cleaned_data['beam_to'])
 
         if self.cleaned_data['city']:
-            sqs = sqs.filter(city=self.cleaned_data['city'])
+            sqs = sqs.filter(city__contains=self.cleaned_data['city'])
 
         if self.cleaned_data['country']:
             sqs = sqs.filter(country=self.cleaned_data['country'])
@@ -89,9 +94,10 @@ class AdvancedSearchForm(SearchForm):
             sqs = sqs.filter(use=self.cleaned_data['use'])
 
         if self.cleaned_data['owner']:
-            sqs = sqs.filter(owner=self.cleaned_data['owner'])
+            sqs = sqs.filter(owner__contains=self.cleaned_data['owner'])
 
         if self.cleaned_data['former_names']:
-            sqs = sqs.filter(former_names=self.cleaned_data['former_names'])
+            sqs = sqs.filter(former_names__contains=self.cleaned_data['former_names'])
 
+        # Return filtered sqs
         return sqs
