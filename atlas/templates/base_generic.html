@@ -10,30 +10,32 @@
   {% block head %}<!-- template-specific static files -->{% endblock %}
 </head>
 <body>
+  <div class="title-bar" data-responsive-toggle="nav-menu" data-hide-for="large">
+    <button class="menu-icon" type="button" data-toggle="nav-menu"></button>
+    <div class="title-bar-title">Historic Ships Atlas</div>
+  </div>
   <div class="grid-container">
-    <nav class="top-bar">
+    <div class="top-bar" id="nav-menu">
       <div class="top-bar-left">
         <ul class="menu">
-          <li class="menu-text">Historic Ships Atlas</li>
+          <li class="menu-text show-for-large">Historic Ships Atlas</li>
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'ships' %}">All Ships</a></li>
           <li><a href="{% url 'haystack_search' %}">Advanced Search</a></li>
         </ul>
       </div>
-      <div class="top-bar-right">
-          <form class="input-group" action="/search/" method="get">
-            {{ basic_search_form.q }}
-            <div class="input-group-button">
-              <input type="submit" class="button" value="Search">
-            </div>
-          </form>
-      </div>
-    </nav>
+      <form class="top-bar-right" action="/search/" method="get">
+        <ul class="menu">
+          <li>{{ basic_search_form.q }}</li>
+          <li><input type="submit" class="button" value="Search"></li>
+        </ul>
+      </form>
+    </div>
     {% block content %}<!-- page content -->{% endblock %}
   </div>
   <script src="{% static 'atlas/js/vendor/jquery.js' %}"></script>
   <script src="{% static 'atlas/js/vendor/what-input.js' %}"></script>
-  <script src="{% static 'js/vendor/foundation.min.js' %}"></script>
+  <script src="{% static 'atlas/js/vendor/foundation.min.js' %}"></script>
   <script>
     $(document).foundation();
   </script>
