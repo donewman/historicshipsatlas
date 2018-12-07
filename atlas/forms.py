@@ -4,7 +4,7 @@ from atlas.models import Ship, Type, City, Country, Builder, Register, Status, U
 
 # Basic search form--appears on all pages
 class BasicSearchForm(SearchForm):
-    q = forms.CharField(max_length=200, required=False)
+    q = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'input-group-field'}))
 
 # Advanced search form--appears on search page only
 class AdvancedSearchForm(SearchForm):
