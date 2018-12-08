@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   {% block title %}<title>Historic Ships Atlas</title>{% endblock %}
   {% load static %}
+  <link rel="stylesheet" href="https://use.typekit.net/fpb1xce.css">
   <link rel="stylesheet" href="{% static 'atlas/css/app.css' %}" />
   {% block head %}<!-- template-specific static files -->{% endblock %}
 </head>
@@ -61,9 +62,7 @@
   <script src="{% static 'atlas/js/vendor/jquery.js' %}"></script>
   <script src="{% static 'atlas/js/vendor/what-input.js' %}"></script>
   <script src="{% static 'atlas/js/vendor/foundation.min.js' %}"></script>
-  <script>
-    $(document).foundation();
-  </script>
+  <script src="{% static 'atlas/js/app.js' %}"></script>
   {% block script %}<!-- script -->{% endblock %}
 </body>
 </html>
