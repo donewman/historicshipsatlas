@@ -6,17 +6,11 @@
   {{ object.type }}
 {% endif %}
 {{ object.year_built }}
-{% if object.builder %}
-  {{ object.builder }}
-{% endif %}
 {% if object.city %}
   {{ object.city }}
 {% endif %}
 {% if object.country %}
   {{ object.country }}
-{% endif %}
-{% if object.registers.all %}
-  {{ object.registers.all }}
 {% endif %}
 {{ object.status }}
 {% if object.uses.all %}

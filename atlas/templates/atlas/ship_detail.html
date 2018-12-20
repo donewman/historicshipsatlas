@@ -26,12 +26,6 @@
     <th scope="row">Year Built</th>
     <td>{{ ship.year_built }}</td>
   </tr>
-  {% if ship.builder %}
-    <tr>
-      <th scope="row">Builder</th>
-      <td><a href="{{ ship.builder.get_absolute_url }}">{{ ship.builder }}</a></td>
-    </tr>
-  {% endif %}
   {% if ship.tonnage %}
     <tr>
       <th scope="row">Gross Tonnage</th>
@@ -54,18 +48,6 @@
     <tr>
       <th scope="row">Location</th>
       <td><a href="{{ ship.city.get_absolute_url }}">{{ ship.city }}</a>, <a href="{{ ship.country.get_absolute_url }}">{{ ship.country }}</a></td>
-    </tr>
-  {% endif %}
-  {% if ship.registers.all %}
-    <tr>
-      <th scope="row">Historic Register(s)</th>
-      <td>
-        <ul>
-          {% for register in ship.registers.all %}
-            <li><a href="{{ register.get_absolute_url }}">{{ register }}</a></li>
-          {% endfor %}
-        </ul>
-      </td>
     </tr>
   {% endif %}
   <tr>

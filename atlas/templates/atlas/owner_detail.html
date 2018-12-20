@@ -3,6 +3,8 @@
 {% block content %}
 <h2>Owner: {{ owner.name }}</h2>
 
+<h3>Ships</h3>
+
 <ul>
   {% for ship in owner.ship_set.all %}
   <li><a href="{{ ship.get_absolute_url }}">{{ ship.name }}</a></li>

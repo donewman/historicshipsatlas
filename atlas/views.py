@@ -4,7 +4,7 @@ from django.views.generic import DetailView, ListView
 # Import serializers (to serialize models to JSON)
 from django.core import serializers
 # Import models
-from atlas.models import Ship, Type, City, Country, Builder, Register, Status, Use, Owner
+from atlas.models import Ship, Type, City, Country, Status, Use, Owner
 
 # Index view
 def index(request):
@@ -36,14 +36,6 @@ class CityDetailView(DetailView):
 # Details view for countries
 class CountryDetailView(DetailView):
     model = Country
-
-# Details view for builders
-class BuilderDetailView(DetailView):
-    model = Builder
-
-# Details view for historic registers
-class RegisterDetailView(DetailView):
-    model = Register
 
 # Details view for statuses
 class StatusDetailView(DetailView):

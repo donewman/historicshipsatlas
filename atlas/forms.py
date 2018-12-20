@@ -1,6 +1,6 @@
 from django import forms
 from haystack.forms import SearchForm
-from atlas.models import Ship, Type, City, Country, Builder, Register, Status, Use, Owner
+from atlas.models import Ship, Type, City, Country, Status, Use, Owner
 
 # Basic search form--appears on all pages
 class BasicSearchForm(SearchForm):
@@ -14,7 +14,6 @@ class AdvancedSearchForm(SearchForm):
     type = forms.ModelMultipleChoiceField(label='Type:', queryset=Type.objects.all(), required=False)
     year_built_from = forms.IntegerField(label='Year Built (From):', required=False)
     year_built_to = forms.IntegerField(label='Year Built (To):', required=False)
-    builder = forms.CharField(label='Builder:', max_length=200, required=False)
     tonnage_from = forms.IntegerField(label='Gross Tonnage (From):', required=False)
     tonnage_to = forms.IntegerField(label='Gross Tonnage (To):', required=False)
     length_from = forms.IntegerField(label='Length (m) (From):', required=False)
@@ -23,7 +22,6 @@ class AdvancedSearchForm(SearchForm):
     beam_to = forms.IntegerField(label='Beam (m) (To):', required=False)
     city = forms.CharField(label='Location - City:', max_length=200, required=False)
     country = forms.ModelMultipleChoiceField(label='Location - Country:', queryset=Country.objects.all(), required=False)
-    register = forms.ModelMultipleChoiceField(label='Historic Register(s):', queryset=Register.objects.all(), required=False)
     status = forms.ModelMultipleChoiceField(label='Status:', queryset=Status.objects.all(), required=False)
     use = forms.ModelMultipleChoiceField(label='Use(s):', queryset=Use.objects.all(), required=False)
     owner = forms.CharField(label='Owner:', max_length=200, required=False)
@@ -57,9 +55,6 @@ class AdvancedSearchForm(SearchForm):
         if self.cleaned_data['year_built_to']:
             sqs = sqs.filter(year_built__lte=self.cleaned_data['year_built_to'])
 
-        if self.cleaned_data['builder']:
-            sqs = sqs.filter(builder__contains=self.cleaned_data['builder'])
-
         if self.cleaned_data['tonnage_from']:
             sqs = sqs.filter(tonnage__gte=self.cleaned_data['tonnage_from'])
 
@@ -83,9 +78,6 @@ class AdvancedSearchForm(SearchForm):
 
         if self.cleaned_data['country']:
             sqs = sqs.filter(country=self.cleaned_data['country'])
-
-        if self.cleaned_data['register']:
-            sqs = sqs.filter(register=self.cleaned_data['register'])
 
         if self.cleaned_data['status']:
             sqs = sqs.filter(status=self.cleaned_data['status'])

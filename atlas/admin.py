@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from atlas.models import Type, City, Country, Builder, Register, Status, Use, Owner, Ship
+from atlas.models import Type, City, Country, Status, Use, Owner, Ship
 
 class TypeAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
@@ -13,14 +13,6 @@ admin.site.register(City, CityAdmin)
 class CountryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 admin.site.register(Country, CountryAdmin)
-
-class BuilderAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
-admin.site.register(Builder, BuilderAdmin)
-
-class RegisterAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug': ('name',)}
-admin.site.register(Register, RegisterAdmin)
 
 class StatusAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}

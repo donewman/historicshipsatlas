@@ -28,10 +28,6 @@
       {{ advanced_search_form.year_built_to.label_tag }}
       {{ advanced_search_form.year_built_to }}
     </div>
-    <div class="cell">
-      {{ advanced_search_form.builder.label_tag }}
-      {{ advanced_search_form.builder }}
-    </div>
     <div class="medium-6 cell">
       {{ advanced_search_form.tonnage_from.label_tag }}
       {{ advanced_search_form.tonnage_from }}
@@ -65,10 +61,6 @@
       {{ advanced_search_form.country }}
     </div>
     <div class="cell">
-      {{ advanced_search_form.register.label_tag }}
-      {{ advanced_search_form.register }}
-    </div>
-    <div class="cell">
       {{ advanced_search_form.status.label_tag }}
       {{ advanced_search_form.status }}
     </div>
@@ -89,7 +81,6 @@
     </div>
   </form>
 
-  {% if query %}
       <h3>Search Results</h3>
 
       {% for result in page.object_list %}
@@ -107,5 +98,4 @@
               {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
           </div>
       {% endif %}
-  {% endif %}
 {% endblock %}
